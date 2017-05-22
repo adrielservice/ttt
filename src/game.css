@@ -4,17 +4,25 @@ body {
 
 table, th, td {
     border: 1px solid black;
+    width: 100%
 }
 
 tr {
-    height: 150px;
+    height: 200px;
 }
 
 td {
 	text-align: center;
 	background-color: white;
-	width: 250px;
-	height: 250px;
+	width: 33%;
+	height: 200px;
+}
+
+td img {
+	text-align: center;
+	display:none;
+	width: 200px;
+	height: 200px;
 }
 
 input[type=Button]:not([id=navbut]) { 
