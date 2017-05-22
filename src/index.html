@@ -32,6 +32,10 @@
 		for (var i = 0; i < cells.length; i++) {
     		cells[i].style.backgroundColor = color;
     	}
+    	var buttons = document.getElementById("tbl").getElementsByTagName("input");
+		for (var i = 0; i < cells.length; i++) {
+    		buttons[i].style.backgroundColor = color;
+    	}
 	}
 
 	function checkForWinnerHorizontally () {
@@ -133,10 +137,10 @@
 	</script>
 
 
-	<input id="butBg" name="but" type=Button onclick="changeBgCol();" value="Click Me!">
+	<input id="navbut" name="bg_color" type=Button onclick="changeBgCol();" value="Background">
 	</input>
 
-	<input id="butCell" name="but" type=Button onclick="changeCellCol();" value="Click Me!">
+	<input id="navbut" name="cell_color" type=Button onclick="changeCellCol();" value="Cell">
 	</input> 
 
 	<table id="tbl">
