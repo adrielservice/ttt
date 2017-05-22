@@ -35,6 +35,7 @@
 		var cells = document.getElementById("tbl").getElementsByTagName("td");
 		for (var i = 0; i < cells.length; i++) {
     		cells[i].style.backgroundColor = color;
+    		cells[i].style.height = cells[i].clientWidth;
     	}
     	var buttons = document.getElementById("tbl").getElementsByTagName("input");
 		for (var i = 0; i < cells.length; i++) {
@@ -133,10 +134,17 @@
 				location.reload();
 			};
 
-		}, 10);
+		}, 10)
+	}
 
+	window.onresize = function(event) {
+    	changeCellCol();
+	};
 
-	}	
+	window.onload = function(evnet) {
+		changeCellCol();
+		changeBgCol();
+	}
 		
 	</script>
 
