@@ -12,6 +12,7 @@
 <body id="bod">
 	<script type="text/javascript">
 	var step = 0;
+	var playWithComputer = true;
 
 	var cEmpty = "empty";
 	var cSmile = "smile";
@@ -103,7 +104,7 @@
 		return result;
 	}
 
-	function makeMove(x, y, pic, btn) {
+	function makeMove(x, y, pic, btn, isComputerMove) {
 		
 		step = step + 1;
 		console.log("Step is " + step);
@@ -127,14 +128,49 @@
 			if (isWinningMove) {
 				alert("You win!");
 				location.reload();
-			}	
-
-			if (step == 9 && !isWinningMove) {
+			} else if (step == 9) {
 				alert("Cats game!");
 				location.reload();
-			};
+			} else if (playWithComputer && !isComputerMove) {
+				computerMakeMove();
+			}
 
 		}, 10)
+	}
+
+	function findNextFreeCell () {
+		var emptyCount = 9 - step;
+		if (emptyCount <= 0) {
+			return -1;
+		}
+
+		var randCellNum = Math.floor(Math.random() * emptyCount);
+		var emptyCellCount = 0;
+		for (var row = 0; row < 3; row++) {
+			for (var column = 0; column < 3; column++) {
+				if (board[row][column] == cEmpty) {
+					if (emptyCellCount == randCellNum) {
+						return 3*row + column;
+					} 
+					emptyCellCount++;
+				}
+			};
+		};
+
+		return -1;
+	}
+
+	function computerMakeMove() {
+		var nextCellId = findNextFreeCell();
+		if (nextCellId < 0) {
+			return;
+		}
+
+		var x = Math.floor(nextCellId / 3);
+		var y = nextCellId % 3;
+		var pic = "pic" + (nextCellId + 1); 
+		var btn = "but" + (nextCellId + 1);
+		makeMove(x, y, pic, btn, true);
 	}
 
 	window.onresize = function(event) {
