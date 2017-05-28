@@ -46,7 +46,7 @@ window.onload = function(evnet) {
 	changeColor();
 
 	var params = getAllUrlParams(window.href);
-	var strPlayerMode = (params.player_mode == undefined) ? true : params.player_mode;
+	var strPlayerMode = (params.player_mode == undefined) ? "true" : params.player_mode;
 	var playerMode = (strPlayerMode == "true");
 	changePlayerMode(playerMode);
 }
