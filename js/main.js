@@ -7,9 +7,11 @@ function makeMove(x, y, pic, btn, isComputerMove) {
 }
 
 function changePlayerMode (mode) {
+	var playerModeLbl = document.getElementById("player_mode");
 	var playerModeBtn = document.getElementById("player_but");
 	var playerMode = game.changePlayerMode(mode);
 	playerModeBtn.value = (playerMode) ? "Play with a human" : "Play with the computer";
+	playerModeLbl.textContent = (playerMode) ? "Playing with the computer" : "Playing with a human";
 }
 
 function changeColor() {
