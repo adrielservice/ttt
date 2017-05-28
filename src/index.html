@@ -26,6 +26,11 @@
 
 	var dcol = ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'turquoise', 'yellow'];
 	
+	function changeColor() {
+		changeBgCol();
+		changeCellCol();
+	}
+	
 	function changeBgCol() {
 		var bodo=document.getElementById('bod');
 		bodo.style.backgroundColor = dcol[Math.floor(Math.random() * dcol.length)];
@@ -178,18 +183,14 @@
 	};
 
 	window.onload = function(evnet) {
-		changeCellCol();
-		changeBgCol();
+		changeColor();
 	}
 		
 	</script>
 
 
-	<input id="navbut" name="bg_color" type=Button onclick="changeBgCol();" value="Background">
+	<input id="color_but" name="color" type=Button onclick="changeColor();" value="Change Colors">
 	</input>
-
-	<input id="navbut" name="cell_color" type=Button onclick="changeCellCol();" value="Cell">
-	</input> 
 
 	<table id="tbl">
 		<tr>
