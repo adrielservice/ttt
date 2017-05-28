@@ -14,9 +14,7 @@ function changePlayerMode (mode) {
 
 function changeColor() {
 	changeBgCol();
-	window.setTimeout(function() {
-		changeCellCol();
-	}, 100);
+	changeCellCol();
 }
 
 function changeBgCol() {
@@ -44,5 +42,9 @@ window.onresize = function(event) {
 
 window.onload = function(evnet) {
 	changeColor();
-	changePlayerMode(true);
+
+	var params = getAllUrlParams(window.href);
+	var strPlayerMode = (params.player_mode == undefined) ? true : params.player_mode;
+	var playerMode = (strPlayerMode == "true");
+	changePlayerMode(playerMode);
 }

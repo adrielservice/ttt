@@ -1,7 +1,7 @@
 function ttt() {
 
 	var step = 0;
-	var playWithComputer = false;
+	var playWithComputer = true;
 
 	var cEmpty = "empty";
 	var cSmile = "smile";
@@ -63,7 +63,7 @@ function ttt() {
 	}
 
 	function restart () {
-		location.reload();
+		window.location = location.pathname + ("?player_mode=" + playWithComputer);
 	}
 
 	/*
