@@ -1,216 +1,21 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="game.css">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ttt.png" />
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name = "viewport" content = "width = device-width, user-scalable = no">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ttt.png" />
+
+	<link rel="stylesheet" type="text/css" href="game.css">
+	<title>Tic Tac Toe</title>
 </head>
-<title>
-	Tic Tac Toe
-</title>
+
 <body id="bod">
-	<script type="text/javascript">
-	var step = 0;
-	var playWithComputer = true;
 
-	var cEmpty = "empty";
-	var cSmile = "smile";
-	var cCool = "cool";
-	var emptyBoard = [
-					[cEmpty,cEmpty,cEmpty],
-					[cEmpty,cEmpty,cEmpty],
-					[cEmpty,cEmpty,cEmpty]
-				];
-	var board = emptyBoard;
+	<script type="text/javascript" src="js/utils/sound.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 
-	var dcol = ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'turquoise', 'yellow'];
-	
-	function sound(src) {
-		this.sound = document.createElement("audio");
-		this.sound.src = src;
-		this.sound.setAttribute("preload", "auto");
-		this.sound.setAttribute("controls", "none");
-		this.sound.style.display = "none";
-		document.body.appendChild(this.sound);
-		this.play = function(){
-			this.sound.play();
-		}
-		this.stop = function(){
-			this.sound.pause();
-		}    
-	}
-
-	var mySound = new sound("audio/bounce.mp3");
-
-	function changeColor() {
-		changeBgCol();
-		changeCellCol();
-	}
-	
-	function changeBgCol() {
-		var bodo=document.getElementById('bod');
-		bodo.style.backgroundColor = dcol[Math.floor(Math.random() * dcol.length)];
-	}
-	function changeCellCol() {
-		var color = dcol[Math.floor(Math.random() * dcol.length)];
-
-		var cells = document.getElementById("tbl").getElementsByTagName("td");
-		for (var i = 0; i < cells.length; i++) {
-    		cells[i].style.backgroundColor = color;
-    		cells[i].style.height = cells[i].clientWidth;
-    	}
-    	var buttons = document.getElementById("tbl").getElementsByTagName("input");
-		for (var i = 0; i < cells.length; i++) {
-    		buttons[i].style.backgroundColor = color;
-    	}
-	}
-
-	function checkForWinnerHorizontally () {
-
-		if (board[0][0] != cEmpty && board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
-			return true;
-		}
-
-		if (board[1][0] != cEmpty && board[1][0] ==board[1][1] && board[1][1] == board[1][2]) {
-			return true;
-		}
-
-		if (board[2][0] != cEmpty && board[2][0] == board[2][1] && board[2][1] == board[2][2]) {
-			return true;
-		}
-
-		return false;
-	}
-
-	function checkForWinnerVertically (){
-		if (board[0][0] != cEmpty && board[0][0] == board[1][0] && board[1][0] == board[2][0]) {
-			return true;
-		}
-
-		if (board[0][1] != cEmpty && board[0][1] ==board[1][1] && board[1][1] == board[2][1]) {
-			return true;
-		}
-
-		if (board[0][2] != cEmpty && board[0][2] == board[1][2] && board[1][2] == board[2][2]) {
-			return true;
-		}
-
-		return false;
-	} 
-
-	function checkForWinnerDiagonally (){
-		if (board[0][0] != cEmpty && 
-			board[0][0] == board[1][1] && 
-			board[1][1] == board[2][2]) {
-			return true;
-		}
-
-		if (board[0][2] != cEmpty && 
-			board[0][2] ==board[1][1] && 
-			board[1][1] == board[2][0]) {
-			return true;
-		}
-
-		return false;
-	} 
-
-	function checkMoveForWinner() {
-		var result = false;
-
-		result = 
-			checkForWinnerHorizontally() ||
-			checkForWinnerVertically() ||
-			checkForWinnerDiagonally();
-
-		return result;
-	}
-
-	function makeMove(x, y, pic, btn, isComputerMove) {
-		
-		step = step + 1;
-		console.log("Step is " + step);
-
-		var btnEl=document.getElementById(btn);
-		btnEl.style.display = 'none';
-
-		var picEl=document.getElementById(pic);
-		if (step % 2 == 1) {
-			picEl.src = "images/smiley.png";
-			board[x][y] = cSmile;
-		} else{
-			picEl.src = "images/Emoji.png";
-			board[x][y] = cCool;
-		};
-		picEl.style.display = 'block';
-
-		mySound.play();
-
-		window.setTimeout(function() {
-
-			var isWinningMove = checkMoveForWinner(); 
-			if (isWinningMove) {
-				var winner = (isComputerMove) ? "Computer" : "Human Player";
-				alert(winner + " wins!");
-				location.reload();
-			} else if (step == 9) {
-				alert("Cats game!");
-				location.reload();
-			} else if (playWithComputer && !isComputerMove) {
-				computerMakeMove();
-			}
-
-		}, 250)
-	}
-
-	function findNextFreeCell () {
-		var emptyCount = 9 - step;
-		if (emptyCount <= 0) {
-			return -1;
-		}
-
-		var randCellNum = Math.floor(Math.random() * emptyCount);
-		var emptyCellCount = 0;
-		for (var row = 0; row < 3; row++) {
-			for (var column = 0; column < 3; column++) {
-				if (board[row][column] == cEmpty) {
-					if (emptyCellCount == randCellNum) {
-						return 3*row + column;
-					} 
-					emptyCellCount++;
-				}
-			};
-		};
-
-		return -1;
-	}
-
-	function computerMakeMove() {
-		var nextCellId = findNextFreeCell();
-		if (nextCellId < 0) {
-			return;
-		}
-
-		var x = Math.floor(nextCellId / 3);
-		var y = nextCellId % 3;
-		var pic = "pic" + (nextCellId + 1); 
-		var btn = "but" + (nextCellId + 1);
-		makeMove(x, y, pic, btn, true);
-	}
-
-	window.onresize = function(event) {
-    	changeCellCol();
-	};
-
-	window.onload = function(evnet) {
-		changeColor();
-	}
-		
-	</script>
-
-
-	<input id="color_but" name="color" type=Button onclick="changeColor();" value="Change Colors">
-	</input>
+	<input id="color_but" name="color" type=Button onclick="changeColor();" value="Change Colors"></input>
 
 	<table id="tbl">
 		<tr>
@@ -225,14 +30,12 @@
 			<td>
 				<input id="but3" name="but" type=Button onclick="makeMove(0, 2, 'pic3', 'but3');" value="Click"></input>
 				<img id="pic3" />
-
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<input id="but4" name="but" type=Button onclick="makeMove(1, 0, 'pic4', 'but4');" value="Click"></input>
 				<img id="pic4" />
-
 			</td>
 			<td>
 				<input id="but5" name="but" type=Button onclick="makeMove(1, 1, 'pic5', 'but5');" value="Click"></input>
@@ -242,29 +45,25 @@
 			<td>
 				<input id="but6" name="but" type=Button onclick="makeMove(1, 2, 'pic6', 'but6');" value="Click"></input>
 				<img id="pic6" />
-
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<input id="but7" name="but" type=Button onclick="makeMove(2, 0, 'pic7', 'but7');" value="Click"></input>
 				<img id="pic7" />
-
 			</td>
 			<td>
 				<input id="but8" name="but" type=Button onclick="makeMove(2, 1, 'pic8', 'but8');" value="Click"></input>
 				<img id="pic8" />
-
 			</td> 
 			<td>
 				<input id="but9" name="but" type=Button onclick="makeMove(2, 2, 'pic9', 'but9');" value="Click"></input>
 				<img id="pic9" />
-
 			</td>
-
 		</tr>
-
 	</table>
+
+	<input id="player_but" name="playerMode" type=Button onclick="changePlayerMode();" value="Play with"></input>
 	
 </body>
 </html>
