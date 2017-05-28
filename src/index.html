@@ -131,7 +131,8 @@
 
 			var isWinningMove = checkMoveForWinner(); 
 			if (isWinningMove) {
-				alert("You win!");
+				var winner = (isComputerMove) ? "Computer" : "Human Player";
+				alert(winner + " wins!");
 				location.reload();
 			} else if (step == 9) {
 				alert("Cats game!");
