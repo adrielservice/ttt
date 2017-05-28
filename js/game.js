@@ -120,10 +120,7 @@ function ttt() {
 	} 
 
 	function checkMoveForWinner() {
-		return 
-			checkForWinnerHorizontally() ||
-			checkForWinnerVertically() ||
-			checkForWinnerDiagonally();
+		return checkForWinnerHorizontally() || checkForWinnerVertically() || checkForWinnerDiagonally();
 	}
 
 	/*
